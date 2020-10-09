@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani&family=Righteous&display=swap');
 
 $base-size: 12px;
+$font-size: 18px;
+$container-width: 1040px;
 
 $font-title: 'Righteous', cursive;
 $font-text: 'Rajdhani', sans-serif;
@@ -18,7 +20,6 @@ $header-bg-color-after-image: $black;
 $header-title-color: $white;
 
 //BUTTON COMPONENT
-$font-size: 18px;
 $button-text-color: $black;
 $button-bg-color-hover: $black;
 $button-text-color-hover: $white;

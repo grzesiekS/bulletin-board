@@ -3,4 +3,6 @@
 .root {
   display: flex;
   justify-content: flex-end;
+  max-width: $container-width;
+  margin: auto;
 }
