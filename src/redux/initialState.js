@@ -10,22 +10,22 @@ export const initialState = {
     currentUser: 'notAuthorized',
     userList: [
       {
-        id: 1,
+        id: '1',
         userName: 'user1',
         permission: 'user',
       },
       {
-        id: 2,
+        id: '2',
         userName: 'user2',
         permission: 'user',
       },
       {
-        id: 3,
+        id: '3',
         userName: 'admin',
         permission: 'admin',
       },
       {
-        id: 4,
+        id: '4',
         userName: 'not logged user',
         permission: 'notAuthorized',
       },

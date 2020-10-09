@@ -4,7 +4,8 @@ import { TopbarComponent } from './Topbar';
 
 describe('Component Topbar', () => {
   it('should render without crashing', () => {
-    const component = shallow(<TopbarComponent />);
+    const users = [];
+    const component = shallow(<TopbarComponent users={users} />);
     expect(component).toBeTruthy();
   });
 });

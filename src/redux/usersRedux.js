@@ -19,8 +19,8 @@ export const reducer = (statePart = [], action = {}) => {
   switch(action.type) {
     case UPDATE_CURRENT_USER: {
       return {
-        currentUser: action.payload,
-        ...statePart,
+        currentUser: statePart.userList.filter(user => user.id === action.payload)[0].permission,
+        userList: statePart.userList,
       };
     }
     default:

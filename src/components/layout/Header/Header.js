@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 // import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+// import { getAll, getCurrentUser, updateCurrentUser } from '../../../redux/usersRedux';
 
 import styles from './Header.module.scss';
 import { Topbar } from '../Topbar/Topbar';
@@ -26,11 +26,12 @@ Component.propTypes = {
 };
 
 // const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
+//   users: getAll(state),
+//   currentUser: getCurrentUser(state),
 // });
 
 // const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
+//   someAction: user => dispatch(updateCurrentUser(user)),
 // });
 
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
