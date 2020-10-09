@@ -10,7 +10,10 @@ import styles from './Header.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>Header</h2>
+    <h2 className={styles.title}>Bulletin Board</h2>
+    <div className={styles.image}>
+      <img src='/images/pexels-mikechie-esparagoza-1742370.jpg' alt='bulletin-board'/>
+    </div>
     {children}
   </div>
 );
