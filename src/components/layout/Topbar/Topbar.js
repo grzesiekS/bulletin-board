@@ -11,14 +11,25 @@ import { Button } from '../../common/Button/Button';
 
 class Component extends React.Component {
 
+  userButtons = (currentUser) => {
+    if(currentUser === 'notAuthorized') {
+      return <Button className={'button-green'}>Log In</Button>;
+    } else if (currentUser === 'user' || currentUser === 'admin') {
+      return (
+        <div>
+          <Button>My Posts</Button>
+          <Button className={'button-red'}>Log Out</Button>
+        </div>
+      );
+    }
+  }
+
   render() {
-    const {className, users, updateCurrentUser} = this.props;
+    const {className, users, currentUser, updateCurrentUser} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
-        <Button>My Posts</Button>
-        <Button className={'button-green'}>Log In</Button>
-        <Button className={'button-red'}>Log Out</Button>
-        <select name='users' id='users' onChange={event => updateCurrentUser(event.currentTarget.value)}>
+        {this.userButtons(currentUser)}
+        <select defaultValue='4' name='users' id='users' onChange={event => updateCurrentUser(event.currentTarget.value)}>
           {users.map(user => (
             <option key={user.id} value={user.id}>{user.userName}</option>
           ))}
