@@ -6,22 +6,20 @@ import clsx from 'clsx';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './Header.module.scss';
-import { Topbar } from '../Topbar/Topbar';
+import styles from './Topbar.module.scss';
+import { Button } from '../../common/Button/Button';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <Topbar />
-    <h2 className={styles.title}>Bulletin Board</h2>
-    <div className={styles.image}>
-      <img src='/images/pexels-mikechie-esparagoza-1742370.jpg' alt='bulletin-board'/>
+const Component = ({className}) => {
+  return (
+    <div className={clsx(className, styles.root)}>
+      <Button>My Posts</Button>
+      <Button className={'button-green'}>Log In</Button>
+      <Button className={'button-red'}>Log Out</Button>
     </div>
-    {children}
-  </div>
-);
+  );
+};
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
 };
 
@@ -36,7 +34,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as Header,
-  // Container as Header,
-  Component as HeaderComponent,
+  Component as Topbar,
+  // Container as Topbar,
+  Component as TopbarComponent,
 };

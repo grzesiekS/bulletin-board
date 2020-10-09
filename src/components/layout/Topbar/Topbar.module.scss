@@ -1,5 +1,6 @@
 @import '../../../styles/settings.scss';
 
 .root {
-  font-family: $font-text;
+  display: flex;
+  justify-content: flex-end;
 }

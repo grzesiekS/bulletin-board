@@ -5,10 +5,31 @@ $base-size: 12px;
 $font-title: 'Righteous', cursive;
 $font-text: 'Rajdhani', sans-serif;
 
+$transition: all 1s;
+
 // COLORS
 $black: #000000;
 $white: #ffffff;
+$lawnGreen: #7CFC00;
+$fireBrick: #B22222;
 
 // HEADER SECTION
 $header-bg-color-after-image: $black;
 $header-title-color: $white;
+
+//BUTTON COMPONENT
+$font-size: 18px;
+$button-text-color: $black;
+$button-bg-color-hover: $black;
+$button-text-color-hover: $white;
+$button-border-color: $black;
+
+$button-border-color-green: $lawnGreen;
+$button-text-color-green: $lawnGreen;
+$button-border-color-green-hover: $lawnGreen;
+$button-text-color-green-hover: $white;
+
+$button-border-color-red: $fireBrick;
+$button-text-color-red: $fireBrick;
+$button-border-color-red-hover: $fireBrick;
+$button-text-color-red-hover: $white;
