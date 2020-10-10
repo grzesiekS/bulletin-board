@@ -7,17 +7,23 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../../redux/postsRedux';
+import { getCurrentUser } from '../../../redux/usersRedux';
 
 import styles from './PostList.module.scss';
 import {Button} from '../../common/Button/Button';
 import {PostTemplate} from '../PostTemplate/PostTemplate';
 
-const Component = ({className, children, posts}) => (
+const Component = ({className, currentUser, posts}) => (
   <div className={clsx(className, styles.root)}>
-    <Button>
-      <FontAwesomeIcon icon={faPlus} />
-      Add New Post
-    </Button>
+    {currentUser === 'notAuthorized'
+      ?
+      null
+      :
+      <Button>
+        <FontAwesomeIcon icon={faPlus} />
+        Add New Post
+      </Button>
+    }
     {posts.map(post => (
       <PostTemplate key={post.id} {...post} />
     ))}
@@ -28,6 +34,7 @@ Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   posts: PropTypes.array,
+  currentUser: PropTypes.string,
 };
 
 Component.defaultProps = {
@@ -36,6 +43,7 @@ Component.defaultProps = {
 
 const mapStateToProps = (state) => ({
   posts: getAllPosts(state),
+  currentUser: getCurrentUser(state),
 });
 
 // const mapDispatchToProps = dispatch => ({
