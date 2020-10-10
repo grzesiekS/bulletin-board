@@ -8,9 +8,11 @@ import styles from './PostTemplate.module.scss';
 
 const Component = ({title, description, user}) => (
   <div className={styles.root}>
-    <p>{title}</p>
-    <p>{description}</p>
-    <p>{user.userName}</p>
+    <div className={styles.postTitle}>
+      <h2>{`Post title: ${title}`}</h2>
+    </div>
+    <p className={styles.description}>{description}</p>
+    <p className={styles.user}>{`Author: ${user.userName}`}</p>
   </div>
 );
 

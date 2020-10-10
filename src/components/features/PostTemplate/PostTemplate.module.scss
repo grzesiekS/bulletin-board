@@ -1,4 +1,36 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid $postTemplate-border-color;
+  border-radius: 5px;
+  margin: 25px auto;
+  max-width: 600px;
+  transition: $transition;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 10px 10px 12px 0px rgba(0,0,0,0.75);
+  }
+}
+
+.postTitle {
+  flex: 100%;
+  background-color: $postTitle-bg-color;
+  text-align: left;
+  color: $postTitle-text-color;
+
+  h2 {
+    margin-left: 20px;
+  }
+}
+
+.description {
+  font-size: 18px;
+}
+
+.user {
+  margin-left: auto;
+  margin-right: 25px;
+}
