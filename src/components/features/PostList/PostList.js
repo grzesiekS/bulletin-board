@@ -2,16 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './Homepage.module.scss';
-import {PostList} from '../../features/PostList/PostList';
+import styles from './PostList.module.scss';
+import {Button} from '../../common/Button/Button';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <PostList />
+    <Button>
+      <FontAwesomeIcon icon={faPlus} />
+      Add New Post
+    </Button>
     {children}
   </div>
 );
@@ -32,7 +37,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as Homepage,
-  // Container as Homepage,
-  Component as HomepageComponent,
+  Component as PostList,
+  // Container as PostList,
+  Component as PostListComponent,
 };
