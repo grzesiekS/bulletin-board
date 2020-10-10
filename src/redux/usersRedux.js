@@ -1,6 +1,7 @@
 /* selectors */
 export const getAll = ({users}) => users.userList;
 export const getCurrentUser = ({users}) => users.currentUser;
+export const getUserById = ({users}, id) => users.userList.filter(user => user.id === id)[0];
 
 /* action name creator */
 const reducerName = 'users';
