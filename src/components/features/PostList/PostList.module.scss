@@ -6,3 +6,10 @@
   border-radius: 5px;
   text-align: center;
 }
+
+nav {
+  a {
+    text-decoration: none;
+    color: $navLink-text-color;
+  }
+}

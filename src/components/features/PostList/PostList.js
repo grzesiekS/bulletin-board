@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {NavLink} from 'react-router-dom';
 
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,9 +25,13 @@ const Component = ({className, currentUser, posts, permmision}) => (
         Add New Post
       </Button>
     }
-    {posts.map(post => (
-      <PostTemplate key={post.id} {...post} />
-    ))}
+    <nav>
+      {posts.map(post => (
+        <NavLink key={post.id} to={`/post/${post.id}`}>
+          <PostTemplate {...post} />
+        </NavLink>
+      ))}
+    </nav>
   </div>
 );
 
