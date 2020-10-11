@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
 import { getAll, getCurrentUser, updateCurrentUser, getUserById } from '../../../redux/usersRedux';
@@ -28,6 +31,11 @@ class Component extends React.Component {
     const {className, users, permmision, updateCurrentUser} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
+        <NavLink to='/' className={styles.homeButton}>
+          <Button>
+            <FontAwesomeIcon icon={faHome} />
+          </Button>
+        </NavLink>
         {this.userButtons(permmision)}
         <select defaultValue='4' name='users' id='users' onChange={event => updateCurrentUser(event.currentTarget.value)}>
           {users.map(user => (
