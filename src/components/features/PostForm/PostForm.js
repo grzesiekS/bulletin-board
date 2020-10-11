@@ -6,12 +6,12 @@ import clsx from 'clsx';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './PostEdit.module.scss';
-import { PostForm } from '../../features/PostForm/PostForm';
+import styles from './PostForm.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <PostForm />
+    <h2>PostForm</h2>
+    {children}
   </div>
 );
 
@@ -31,7 +31,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as PostEdit,
-  // Container as PostEdit,
-  Component as PostEditComponent,
+  Component as PostForm,
+  // Container as PostForm,
+  Component as PostFormComponent,
 };

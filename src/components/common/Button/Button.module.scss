@@ -13,6 +13,7 @@
   transition: $transition;
 
   &:hover {
+    cursor: pointer;
     background-color: $button-bg-color-hover;
     color: $button-text-color-hover;
   }

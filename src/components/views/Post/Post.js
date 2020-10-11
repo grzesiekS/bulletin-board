@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import clsx from 'clsx';
 
@@ -19,7 +20,13 @@ const Component = ({className, post, user, status, currentUserInfo}) => {
 
   const buttonRender = () => {
     if(currentUserInfo.id === user.id || currentUserInfo.permission === 'admin') {
-      return <div className={styles.buttonSection}><Button>Edit Post</Button></div>;
+      return (
+        <div className={styles.buttonSection}>
+          <NavLink to={`/post/${post.id}/edit`}>
+            <Button Type='div'>Edit Post</Button>
+          </NavLink>
+        </div>
+      );
     }
   };
 
