@@ -12,10 +12,10 @@ import {Button} from '../../common/Button/Button';
 
 class Component extends React.Component {
   state = {
-    title: '',
-    description: '',
-    statusId: '',
-    price: '',
+    title: this.props.selectedPost.title || '',
+    description: this.props.selectedPost.description || '',
+    statusId: this.props.selectedPost.statusId || '',
+    price: this.props.selectedPost.price || '',
   }
 
   stateChange(value, key, postId, func) {
@@ -37,7 +37,7 @@ class Component extends React.Component {
               type='text'
               id='title'
               minLength='10'
-              value={selectedPost.title || ''}
+              value={this.state.title}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             />
@@ -45,7 +45,7 @@ class Component extends React.Component {
             <textarea
               id='description'
               minLength='20'
-              value={selectedPost.description || ''}
+              value={this.state.description}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             />
@@ -53,7 +53,7 @@ class Component extends React.Component {
             <select
               name='statusId'
               id='statusId'
-              defaultValue={selectedPost.statusId || ''}
+              defaultValue={this.state.statusId}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             >
@@ -66,7 +66,7 @@ class Component extends React.Component {
               id='price'
               type='number'
               min='0'
-              value={selectedPost.price || ''}
+              value={this.state.price}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             />
