@@ -14,3 +14,15 @@
 .userInfo {
   font-size: $font-size;
 }
+
+.published {
+  color: $post-status-published-color;
+}
+
+.closed {
+  color: $post-status-closed-color;
+}
+
+.thicken {
+  font-weight: 700;
+}
