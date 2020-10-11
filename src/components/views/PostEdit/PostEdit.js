@@ -16,7 +16,7 @@ class Component extends React.Component {
 
     return (
       <div className={clsx(className, styles.root)}>
-        <PostForm postId={this.props.match.params.id} />
+        <PostForm postId={this.props.match.params.id} type={'edit'} />
       </div>
     );
   }

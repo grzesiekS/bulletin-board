@@ -20,10 +20,12 @@ const Component = ({className, currentUser, posts, permmision}) => (
       ?
       null
       :
-      <Button>
-        <FontAwesomeIcon icon={faPlus} />
-        Add New Post
-      </Button>
+      <NavLink to='/post/add'>
+        <Button Type={'div'}>
+          <FontAwesomeIcon icon={faPlus} />
+         Add New Post
+        </Button>
+      </NavLink>
     }
     <nav>
       {posts.map(post => (

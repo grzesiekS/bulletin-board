@@ -8,7 +8,7 @@ import { getSelectedPost, updatePost } from '../../../redux/postsRedux';
 import { getAllStatus } from '../../../redux/statusRedux';
 
 import styles from './PostForm.module.scss';
-
+import {Button} from '../../common/Button/Button';
 
 class Component extends React.Component {
   state = {
@@ -27,7 +27,7 @@ class Component extends React.Component {
   }
 
   render() {
-    const {className, selectedPost, allStatus, updatePost} = this.props;
+    const {className, selectedPost, allStatus, updatePost, type} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
         <div className={styles.container}>
@@ -39,6 +39,7 @@ class Component extends React.Component {
               minLength='10'
               value={selectedPost.title || ''}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
+              required
             />
             <label htmlFor='description'>Description:</label>
             <textarea
@@ -46,6 +47,7 @@ class Component extends React.Component {
               minLength='20'
               value={selectedPost.description || ''}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
+              required
             />
             <label htmlFor='statusId'>Status:</label>
             <select
@@ -53,6 +55,7 @@ class Component extends React.Component {
               id='statusId'
               defaultValue={selectedPost.statusId || ''}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
+              required
             >
               {allStatus.map(status => (
                 <option key={status.id} value={status.id}>{status.statusName}</option>
@@ -65,7 +68,14 @@ class Component extends React.Component {
               min='0'
               value={selectedPost.price || ''}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
+              required
             />
+            {type === 'Add'
+              ?
+              <Button>Add new</Button>
+              :
+              null
+            }
           </form>
         </div>
       </div>
@@ -78,10 +88,11 @@ Component.propTypes = {
   selectedPost: PropTypes.object,
   allStatus: PropTypes.array,
   updatePost: PropTypes.func,
+  type: PropTypes.string,
 };
 
 Component.defaultProps = {
-  selectedPost: [],
+  selectedPost: {},
   allStatus: [],
 };
 

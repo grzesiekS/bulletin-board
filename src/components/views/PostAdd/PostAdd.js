@@ -7,11 +7,11 @@ import clsx from 'clsx';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './PostAdd.module.scss';
+import { PostForm } from '../../features/PostForm/PostForm';
 
-const Component = ({className, children}) => (
+const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>PostAdd</h2>
-    {children}
+    <PostForm type={'Add'}/>
   </div>
 );
 
