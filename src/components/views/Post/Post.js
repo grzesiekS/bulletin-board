@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getSelectedPost } from '../../../redux/postsRedux';
 
 import styles from './Post.module.scss';
 
@@ -20,18 +20,18 @@ Component.propTypes = {
   className: PropTypes.string,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = (state, props) => ({
+  post: getSelectedPost(state, props.match.params.id),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as Post,
-  // Container as Post,
+  // Component as Post,
+  Container as Post,
   Component as PostComponent,
 };

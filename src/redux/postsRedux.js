@@ -1,5 +1,6 @@
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
+export const getSelectedPost = ({posts}, postId) => posts.data.filter(post => post.id === postId)[0];
 
 /* action name creator */
 const reducerName = 'posts';

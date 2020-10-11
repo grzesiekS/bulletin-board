@@ -32,7 +32,7 @@ class Component extends React.Component {
     return (
       <div className={clsx(className, styles.root)}>
         <NavLink to='/' className={styles.homeButton}>
-          <Button>
+          <Button Type='div'>
             <FontAwesomeIcon icon={faHome} />
           </Button>
         </NavLink>
