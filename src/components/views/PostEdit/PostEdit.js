@@ -9,15 +9,27 @@ import clsx from 'clsx';
 import styles from './PostEdit.module.scss';
 import { PostForm } from '../../features/PostForm/PostForm';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <PostForm />
-  </div>
-);
+
+class Component extends React.Component {
+  render() {
+    const {className} = this.props;
+
+    return (
+      <div className={clsx(className, styles.root)}>
+        <PostForm postId={this.props.match.params.id} />
+      </div>
+    );
+  }
+}
 
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
 };
 
 // const mapStateToProps = state => ({
