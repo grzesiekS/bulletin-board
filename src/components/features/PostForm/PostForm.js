@@ -11,6 +11,20 @@ import styles from './PostForm.module.scss';
 
 
 class Component extends React.Component {
+  state = {
+    title: '',
+    description: '',
+    statusId: '',
+    price: '',
+  }
+
+  stateChange(value, key, postId, func) {
+    this.setState({
+      ...this.state,
+      [key]: value,
+    });
+    func(value, key, postId);
+  }
 
   render() {
     const {className, selectedPost, allStatus, updatePost} = this.props;
@@ -24,21 +38,21 @@ class Component extends React.Component {
               id='title'
               minLength='10'
               value={selectedPost.title || ''}
-              onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
+              onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
             />
             <label htmlFor='description'>Description:</label>
             <textarea
               id='description'
               minLength='20'
               value={selectedPost.description || ''}
-              onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
+              onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
             />
             <label htmlFor='statusId'>Status:</label>
             <select
               name='statusId'
               id='statusId'
               defaultValue={selectedPost.statusId || ''}
-              onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
+              onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
             >
               {allStatus.map(status => (
                 <option key={status.id} value={status.id}>{status.statusName}</option>
@@ -50,7 +64,7 @@ class Component extends React.Component {
               type='number'
               min='0'
               value={selectedPost.price || ''}
-              onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
+              onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
             />
           </form>
         </div>
