@@ -3,6 +3,9 @@
 .root {
   max-width: $container-width;
   margin: auto;
+}
+
+.container {
   display: flex;
   justify-content: space-evenly;
 }
@@ -25,4 +28,8 @@
 
 .thicken {
   font-weight: 700;
+}
+
+.buttonSection {
+  text-align: center;
 }
