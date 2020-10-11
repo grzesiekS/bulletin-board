@@ -28,6 +28,10 @@
 
 .description {
   font-size: $font-size;
+  padding: 0 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .user {
