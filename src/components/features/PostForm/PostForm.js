@@ -21,7 +21,7 @@ class Component extends React.Component {
             <label htmlFor='title'>Title:</label>
             <input type='text' id='title' maxLength='10' value={selectedPost.title}></input>
             <label htmlFor='description'>Description:</label>
-            <input type='text' id='description' maxLength='20' value={selectedPost.description}></input>
+            <textarea id='description' maxLength='20' value={selectedPost.description}></textarea>
             <label htmlFor='statusId'>Status:</label>
             <select name='statusId' id='statusId' defaultValue={selectedPost.statusId}>
               {allStatus.map(status => (

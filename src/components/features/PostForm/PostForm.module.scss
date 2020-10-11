@@ -3,9 +3,29 @@
 .root {
   max-width: $container-width;
   margin: auto;
+
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
+form {
+  text-align: center;
+  input, label, select, textarea {
+    display: block;
+    margin: auto;
+    font-size: $font-size;
+    font-family: $font-text;
+  }
+
+  input, select {
+    margin-bottom: 25px;
+    height: 35px;
+    width: 50vh;
+    text-align: center;
+    text-align-last: center;
+  }
+
+  textarea {
+    margin-bottom: 25px;
+    height: 90px;
+    width: 50vh;
+  }
 }
