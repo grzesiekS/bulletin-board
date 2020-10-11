@@ -30,14 +30,14 @@ class Component extends React.Component {
             <textarea
               id='description'
               minLength='20'
-              value={selectedPost.description}
+              value={selectedPost.description || ''}
               onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
             />
             <label htmlFor='statusId'>Status:</label>
             <select
               name='statusId'
               id='statusId'
-              defaultValue={selectedPost.statusId}
+              defaultValue={selectedPost.statusId || ''}
               onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
             >
               {allStatus.map(status => (
@@ -49,7 +49,7 @@ class Component extends React.Component {
               id='price'
               type='number'
               min='0'
-              value={selectedPost.price}
+              value={selectedPost.price || ''}
               onChange={event => updatePost(event.currentTarget.value ,event.currentTarget.id, selectedPost.id)}
             />
           </form>
