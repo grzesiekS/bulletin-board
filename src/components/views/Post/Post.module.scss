@@ -3,4 +3,14 @@
 .root {
   max-width: $container-width;
   margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.postInfo {
+  font-size: $font-size;
+}
+
+.userInfo {
+  font-size: $font-size;
 }

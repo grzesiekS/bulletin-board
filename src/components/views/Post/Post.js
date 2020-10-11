@@ -10,8 +10,7 @@ import { getUserById } from '../../../redux/usersRedux';
 import styles from './Post.module.scss';
 
 const Component = ({className, post, user}) => {
-  console.log(post);
-  console.log(user);
+
   return(
     <div className={clsx(className, styles.root)}>
       <div className={styles.postInfo}>
