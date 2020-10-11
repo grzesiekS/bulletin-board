@@ -1,3 +1,5 @@
+import shortid from 'shortid';
+
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
 export const getSelectedPost = ({posts}, postId) => posts.data.filter(post => post.id === postId)[0];
@@ -11,12 +13,14 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const UPDATE_POST = createActionName('UPDATE_POST');
+const ADD_NEW_POST = createActionName('ADD_NEW_POST');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
-export const updatePost = payload => ({ payload, type: UPDATE_POST });
+export const updatePost = payload => ({ payload, currentDate: new Date(), type: UPDATE_POST });
+export const addNewPost = payload => ({payload, currentDate: new Date(), id: shortid.generate(), type: ADD_NEW_POST});
 
 /* thunk creators */
 
@@ -60,6 +64,7 @@ export const reducer = (statePart = [], action = {}) => {
               return {
                 ...data,
                 [action.payload.id]: action.payload.value,
+                updateDate: action.currentDate.toString(),
               };
             } else {
               return {
@@ -67,6 +72,25 @@ export const reducer = (statePart = [], action = {}) => {
               };
             }
           }),
+      };
+    }
+    case ADD_NEW_POST: {
+      console.log(action);
+      return {
+        ...statePart,
+        data: [
+          ...statePart.data,
+          {
+            id: action.id,
+            title: action.payload.componentState.title,
+            description: action.payload.componentState.description,
+            uploadDate: action.currentDate.toString(),
+            updateDate: action.currentDate.toString(),
+            userId: action.payload.currentUser,
+            statusId: action.payload.componentState.statusId,
+            price: action.payload.componentState.price,
+          },
+        ],
       };
     }
     default:

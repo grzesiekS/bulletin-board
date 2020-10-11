@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getSelectedPost, updatePost } from '../../../redux/postsRedux';
+import { getSelectedPost, updatePost, addNewPost } from '../../../redux/postsRedux';
 import { getAllStatus } from '../../../redux/statusRedux';
+import { getCurrentUser } from '../../../redux/usersRedux';
 
 import styles from './PostForm.module.scss';
 import {Button} from '../../common/Button/Button';
@@ -14,7 +15,7 @@ class Component extends React.Component {
   state = {
     title: this.props.selectedPost.title || '',
     description: this.props.selectedPost.description || '',
-    statusId: this.props.selectedPost.statusId || '',
+    statusId: this.props.selectedPost.statusId || '1',
     price: this.props.selectedPost.price || '',
   }
 
@@ -27,7 +28,7 @@ class Component extends React.Component {
   }
 
   render() {
-    const {className, selectedPost, allStatus, updatePost, type} = this.props;
+    const {className, selectedPost, allStatus, updatePost, type, getCurrentUser, addNewPost} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
         <div className={styles.container}>
@@ -72,7 +73,15 @@ class Component extends React.Component {
             />
             {type === 'Add'
               ?
-              <Button>Add new</Button>
+              <Button>
+                <div
+                  onClick={event => {
+                    event.preventDefault();
+                    addNewPost(this.state, getCurrentUser);
+                  }}>
+                    Add new
+                </div>
+              </Button>
               :
               null
             }
@@ -89,6 +98,8 @@ Component.propTypes = {
   allStatus: PropTypes.array,
   updatePost: PropTypes.func,
   type: PropTypes.string,
+  getCurrentUser: PropTypes.string,
+  addNewPost: PropTypes.func,
 };
 
 Component.defaultProps = {
@@ -99,10 +110,12 @@ Component.defaultProps = {
 const mapStateToProps = (state, props) => ({
   selectedPost: getSelectedPost(state, props.postId),
   allStatus: getAllStatus(state),
+  getCurrentUser: getCurrentUser(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   updatePost: (value,id, postId) => dispatch(updatePost({value,id,postId})),
+  addNewPost: (componentState, currentUser) => dispatch(addNewPost({componentState, currentUser})),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
