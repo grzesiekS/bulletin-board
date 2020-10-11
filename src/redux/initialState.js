@@ -52,7 +52,7 @@ export const initialState = {
     },
   ],
   users: {
-    currentUser: 'notAuthorized',
+    currentUser: '4',
     userList: [
       {
         id: '1',

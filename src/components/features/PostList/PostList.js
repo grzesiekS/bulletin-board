@@ -7,15 +7,15 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
 import { getAllPosts } from '../../../redux/postsRedux';
-import { getCurrentUser } from '../../../redux/usersRedux';
+import { getCurrentUser, getUserById } from '../../../redux/usersRedux';
 
 import styles from './PostList.module.scss';
 import {Button} from '../../common/Button/Button';
 import {PostTemplate} from '../PostTemplate/PostTemplate';
 
-const Component = ({className, currentUser, posts}) => (
+const Component = ({className, currentUser, posts, permmision}) => (
   <div className={clsx(className, styles.root)}>
-    {currentUser === 'notAuthorized'
+    {permmision === 'notAuthorized'
       ?
       null
       :
@@ -35,16 +35,22 @@ Component.propTypes = {
   className: PropTypes.string,
   posts: PropTypes.array,
   currentUser: PropTypes.string,
+  permmision: PropTypes.string,
 };
 
 Component.defaultProps = {
   posts: [],
 };
 
-const mapStateToProps = (state) => ({
-  posts: getAllPosts(state),
-  currentUser: getCurrentUser(state),
-});
+const mapStateToProps = (state) => {
+  const currentUser = getCurrentUser(state);
+  const permmision = getUserById(state, currentUser).permission;
+  return{
+    posts: getAllPosts(state),
+    currentUser,
+    permmision,
+  };
+};
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
