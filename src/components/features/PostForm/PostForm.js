@@ -17,6 +17,7 @@ class Component extends React.Component {
     description: this.props.selectedPost.description || '',
     statusId: this.props.selectedPost.statusId || '1',
     price: this.props.selectedPost.price || '',
+    postStatus: null,
   }
 
   stateChange(value, key, postId, func) {
@@ -27,10 +28,39 @@ class Component extends React.Component {
     func(value, key, postId);
   }
 
+  stateReset() {
+    this.setState({
+      ...this.state,
+      title: '',
+      description: '',
+      statusId: '1',
+      price: '',
+    });
+  }
+
+  postStatusChange() {
+    this.setState({
+      ...this.state,
+      postStatus: true,
+    });
+
+    setTimeout(() => this.stateReset(), 100);
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        postStatus: null,
+      });
+    }, 3000);
+  }
+
   render() {
     const {className, selectedPost, allStatus, updatePost, type, getCurrentUser, addNewPost} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
+        <div className={this.state.postStatus ? `${styles.postStatus} ${styles.active}`  : styles.postStatus}>
+          <p>New Post added</p>
+        </div>
         <div className={styles.container}>
           <form>
             <label htmlFor='title'>Title:</label>
@@ -75,6 +105,7 @@ class Component extends React.Component {
               ?
               <Button onClick={() => {
                 addNewPost(this.state, getCurrentUser);
+                this.postStatusChange();
               }}>
                 Add new
               </Button>

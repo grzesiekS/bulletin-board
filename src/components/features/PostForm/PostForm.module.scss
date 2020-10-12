@@ -6,6 +6,24 @@
 
 }
 
+.postStatus {
+  text-align: center;
+  opacity: 0;
+  transition: $transition;
+
+  p {
+    display: inline-block;
+    width: 50vh;
+    padding: 15px;
+    background-color: $postCorrect-bg-color;
+    font-size: $font-size;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}
+
 form {
   text-align: center;
   input, label, select, textarea {
