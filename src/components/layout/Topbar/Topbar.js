@@ -66,7 +66,7 @@ Component.propTypes = {
 
 const mapStateToProps = state => {
   const currentUser = getCurrentUser(state);
-  const permmision = getUserById(state, currentUser).permission;
+  const permmision = !getUserById(state, currentUser) ? 'notAuthorized' : getUserById(state, currentUser).permission;
   return {
     users: getAll(state),
     permmision,
