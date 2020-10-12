@@ -73,14 +73,10 @@ class Component extends React.Component {
             />
             {type === 'Add'
               ?
-              <Button>
-                <div
-                  onClick={event => {
-                    event.preventDefault();
-                    addNewPost(this.state, getCurrentUser);
-                  }}>
-                    Add new
-                </div>
+              <Button onClick={() => {
+                addNewPost(this.state, getCurrentUser);
+              }}>
+                Add new
               </Button>
               :
               null

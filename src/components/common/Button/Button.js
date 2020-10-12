@@ -8,9 +8,9 @@ import clsx from 'clsx';
 
 import styles from './Button.module.scss';
 
-const Component = ({children, className, Type = 'a'}) => {
+const Component = ({children, className, Type = 'a', ...otherProps}) => {
   return (
-    <Type href='/#' className={clsx(styles[className], styles.button,)}>
+    <Type className={clsx(styles[className], styles.button)} {...otherProps}>
       {children}
     </Type>
   );
