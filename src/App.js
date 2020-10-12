@@ -29,7 +29,7 @@ const App = () => (
           <CssBaseline />
           <MainLayout>
             <Switch>
-              <PrivateRoute  exact path='/' component={Homepage} />
+              <Route  exact path='/' component={Homepage} />
               <PrivateRoute exact path='/post/add' component={PostAdd} />
               <PrivateRoute exact path='/post/:id' component={Post} />
               <PrivateRoute exact path='/post/:id/edit' component={PostEdit} />
