@@ -62,10 +62,10 @@ Component.propTypes = {
 };
 
 Component.defaultProps = {
-  user: [],
-  post: [],
-  status: [],
-  currentUserInfo: [],
+  user: {},
+  post: {},
+  status: {},
+  currentUserInfo: {},
 };
 
 const mapStateToProps = (state, props) => {

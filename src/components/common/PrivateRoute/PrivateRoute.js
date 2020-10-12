@@ -19,7 +19,7 @@ const Component = ({ component: Component, permmision, ...rest}) => (
 );
 
 Component.propTypes = {
-  component: PropTypes.node,
+  component: PropTypes.any,
   permmision: PropTypes.string,
 };
 
