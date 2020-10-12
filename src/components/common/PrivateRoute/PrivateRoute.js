@@ -15,9 +15,7 @@ const Component = ({ component: Component, permmision, ...rest}) => (
         <Redirect to='/NotFound' />
       )
     }
-  >
-
-  </Route>
+  />
 );
 
 Component.propTypes = {
