@@ -14,6 +14,7 @@ const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const UPDATE_POST = createActionName('UPDATE_POST');
 const ADD_NEW_POST = createActionName('ADD_NEW_POST');
+const FILTER_USER_POST = createActionName('FILTER_USER_POST');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -21,6 +22,7 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const updatePost = payload => ({ payload, currentDate: new Date(), type: UPDATE_POST });
 export const addNewPost = payload => ({payload, currentDate: new Date(), id: shortid.generate(), type: ADD_NEW_POST});
+export const filterUserPosts = payload => ({payload, type: FILTER_USER_POST});
 
 /* thunk creators */
 
@@ -75,7 +77,6 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case ADD_NEW_POST: {
-      console.log(action);
       return {
         ...statePart,
         data: [
@@ -91,6 +92,12 @@ export const reducer = (statePart = [], action = {}) => {
             price: action.payload.componentState.price,
           },
         ],
+      };
+    }
+    case FILTER_USER_POST: {
+      return {
+        ...statePart,
+        data: statePart.data.filter(data => data.userId === action.payload),
       };
     }
     default:
