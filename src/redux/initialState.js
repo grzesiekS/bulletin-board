@@ -52,7 +52,7 @@ export const initialState = {
     },
   ],
   users: {
-    currentUser: '1',
+    currentUser: '',
     userList: [
       {
         id: '1',

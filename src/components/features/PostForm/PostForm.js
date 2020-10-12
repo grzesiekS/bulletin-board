@@ -18,6 +18,7 @@ class Component extends React.Component {
     statusId: this.props.selectedPost.statusId || '1',
     price: this.props.selectedPost.price || '',
     postStatus: null,
+    postStatusDesc: '',
   }
 
   stateChange(value, key, postId, func) {
@@ -38,13 +39,14 @@ class Component extends React.Component {
     });
   }
 
-  postStatusChange() {
+  postStatusChange(status, desc) {
     this.setState({
       ...this.state,
-      postStatus: true,
+      postStatus: status,
+      postStatusDesc: desc,
     });
 
-    setTimeout(() => this.stateReset(), 100);
+    if(status) {setTimeout(() => this.stateReset(), 100);}
 
     setTimeout(() => {
       this.setState({
@@ -54,12 +56,23 @@ class Component extends React.Component {
     }, 3000);
   }
 
+  newPost(user) {
+    if(this.state.title && this.state.description && this.state.statusId && this.state.price) {
+      if(this.state.title.length >= 10 && this.state.description.length >= 20 && this.state.price >= 0) {
+        this.props.addNewPost(this.state, user);
+        this.postStatusChange(true,'New Post Added');
+      }
+    } else {
+      this.postStatusChange(false, 'Something went wrong');
+    }
+  }
+
   render() {
-    const {className, selectedPost, allStatus, updatePost, type, getCurrentUser, addNewPost} = this.props;
+    const {className, selectedPost, allStatus, updatePost, type, getCurrentUser} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
-        <div className={this.state.postStatus ? `${styles.postStatus} ${styles.active}`  : styles.postStatus}>
-          <p>New Post added</p>
+        <div className={this.state.postStatus === true ? `${styles.postStatus} ${styles.active}`  : this.state.postStatus === false ? `${styles.postStatus} ${styles.disactive}` : styles.postStatus}>
+          <p>{this.state.postStatusDesc}</p>
         </div>
         <div className={styles.container}>
           <form>
@@ -104,8 +117,7 @@ class Component extends React.Component {
             {type === 'Add'
               ?
               <Button onClick={() => {
-                addNewPost(this.state, getCurrentUser);
-                this.postStatusChange();
+                this.newPost(getCurrentUser);
               }}>
                 Add new
               </Button>

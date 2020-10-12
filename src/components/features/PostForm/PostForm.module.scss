@@ -15,12 +15,25 @@
     display: inline-block;
     width: 50vh;
     padding: 15px;
-    background-color: $postCorrect-bg-color;
     font-size: $font-size;
+    font-weight: 700;
+    transition: $transition;
   }
 
   &.active {
     opacity: 1;
+
+    p {
+      background-color: $postCorrect-active-bg-color;
+    }
+  }
+
+  &.disactive {
+    opacity: 1;
+
+    p {
+      background-color: $postCorrect-disactive-bg-color;
+    }
   }
 }
 
