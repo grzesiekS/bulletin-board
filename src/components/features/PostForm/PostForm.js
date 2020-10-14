@@ -61,6 +61,8 @@ class Component extends React.Component {
       if(this.state.title.length >= 10 && this.state.description.length >= 20 && this.state.price >= 0) {
         this.props.addNewPost(this.state, user);
         this.postStatusChange(true,'New Post Added');
+      } else {
+        this.postStatusChange(false, 'Something went wrong');
       }
     } else {
       this.postStatusChange(false, 'Something went wrong');

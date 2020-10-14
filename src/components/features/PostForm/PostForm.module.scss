@@ -3,13 +3,17 @@
 .root {
   max-width: $container-width;
   margin: auto;
-
+  position: relative;
 }
 
 .postStatus {
+  position: absolute;
   text-align: center;
   opacity: 0;
   transition: $transition;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%);
 
   p {
     display: inline-block;
@@ -22,6 +26,7 @@
 
   &.active {
     opacity: 1;
+    position: relative;
 
     p {
       background-color: $postCorrect-active-bg-color;
@@ -30,6 +35,7 @@
 
   &.disactive {
     opacity: 1;
+    position: relative;
 
     p {
       background-color: $postCorrect-disactive-bg-color;
