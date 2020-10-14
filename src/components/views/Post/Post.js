@@ -70,8 +70,8 @@ Component.defaultProps = {
 
 const mapStateToProps = (state, props) => {
   const post = getSelectedPost(state, props.match.params.id);
-  const user = getUserById(state, post.userId);
-  const status = getStatusById(state, post.statusId);
+  const user = getUserById(state, post.user);
+  const status = getStatusById(state, post.status);
   const currentUser = getCurrentUser(state);
   const currentUserInfo = getUserById(state, currentUser);
 

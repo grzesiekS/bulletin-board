@@ -27,7 +27,7 @@ Component.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => ({
-  user: getUserById(state, props.userId),
+  user: getUserById(state, props.user),
 });
 
 // const mapDispatchToProps = dispatch => ({

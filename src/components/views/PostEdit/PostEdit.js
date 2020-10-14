@@ -14,7 +14,7 @@ import { NotFound } from '../../views/NotFound/NotFound';
 class Component extends React.Component {
 
   renderSite = () => {
-    if(this.props.permission !== 'admin' && this.props.currentUser !== this.props.getSelectedPost.userId) {
+    if(this.props.permission !== 'admin' && this.props.currentUser !== this.props.getSelectedPost.user) {
       return (
         <NotFound />
       );
@@ -46,7 +46,7 @@ Component.propTypes = {
   currentUser: PropTypes.string,
   permission: PropTypes.string,
   getSelectedPost: PropTypes.shape({
-    userId: PropTypes.string,
+    user: PropTypes.string,
   }),
 };
 

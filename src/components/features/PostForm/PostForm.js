@@ -15,7 +15,7 @@ class Component extends React.Component {
   state = {
     title: this.props.selectedPost.title || '',
     description: this.props.selectedPost.description || '',
-    statusId: this.props.selectedPost.statusId || '1',
+    status: this.props.selectedPost.status || '1',
     price: this.props.selectedPost.price || '',
     postStatus: null,
     postStatusDesc: '',
@@ -34,7 +34,7 @@ class Component extends React.Component {
       ...this.state,
       title: '',
       description: '',
-      statusId: '1',
+      status: '1',
       price: '',
     });
   }
@@ -57,7 +57,7 @@ class Component extends React.Component {
   }
 
   newPost(user) {
-    if(this.state.title && this.state.description && this.state.statusId && this.state.price) {
+    if(this.state.title && this.state.description && this.state.status && this.state.price) {
       if(this.state.title.length >= 10 && this.state.description.length >= 20 && this.state.price >= 0) {
         this.props.addNewPost(this.state, user);
         this.postStatusChange(true,'New Post Added');
@@ -95,11 +95,11 @@ class Component extends React.Component {
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             />
-            <label htmlFor='statusId'>Status:</label>
+            <label htmlFor='status'>Status:</label>
             <select
-              name='statusId'
-              id='statusId'
-              defaultValue={this.state.statusId}
+              name='status'
+              id='status'
+              defaultValue={this.state.status}
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             >
