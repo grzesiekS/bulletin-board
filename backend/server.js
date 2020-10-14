@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const postsRoutes = require('./routes/posts.routes');
 const statusRoutes = require('./routes/status.routes');
+const usersRoutes = require('./routes/users.routes');
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use(express.urlencoded({ extended: false }));
 
 /* API ENDPOINTS */
 app.use('/api', postsRoutes);
-app.use('/api/', statusRoutes);
+app.use('/api', statusRoutes);
+app.use('/api', usersRoutes);
 
 /* API ERROR PAGES */
 app.use('/api', (req, res) => {
