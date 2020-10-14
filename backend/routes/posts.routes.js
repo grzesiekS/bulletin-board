@@ -5,10 +5,11 @@ const Post = require('../models/post.model');
 
 router.get('/posts', async (req, res) => {
   try {
-    const result = await Post
-      .find({status: 'published'})
-      .select('author created title photo')
-      .sort({created: -1});
+    // const result = await Post
+    //   .find({status: 'published'})
+    //   .select('author created title photo')
+    //   .sort({created: -1});
+    const result = await Post.find().populate('status');
     if(!result) res.status(404).json({ post: 'Not found' });
     else res.json(result);
   }

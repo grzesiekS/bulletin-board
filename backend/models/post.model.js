@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
   uploadDate: {type: String, required: true},
   updateDate: {type: String, required: true},
   userId: {type: String, required: true},
-  statusId: {type: String, required: true},
+  status: {type: String, required: true, ref: 'Status'},
   price: {type: Number, required: true},
 });
 
