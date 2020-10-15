@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { getUserById } from '../../../redux/usersRedux';
+// import { connect } from 'react-redux';
+// import { getUserById } from '../../../redux/usersRedux';
 
 import styles from './PostTemplate.module.scss';
 
@@ -20,24 +20,25 @@ Component.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   user: PropTypes.object,
+  _id: PropTypes.string,
 };
 
 Component.defaultProps = {
   user: {},
 };
 
-const mapStateToProps = (state, props) => ({
-  user: getUserById(state, props.user),
-});
+// const mapStateToProps = (state, props) => ({
+//   user: getUserById(state, props.user),
+// });
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-const Container = connect(mapStateToProps)(Component);
+// const Container = connect(mapStateToProps)(Component);
 
 export {
-  // Component as PostTemplate,
-  Container as PostTemplate,
+  Component as PostTemplate,
+  // Container as PostTemplate,
   Component as PostTemplateComponent,
 };

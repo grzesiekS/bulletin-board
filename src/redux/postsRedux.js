@@ -29,7 +29,9 @@ export const filterUserPosts = payload => ({payload, type: FILTER_USER_POST});
 export const fetchAllPosts = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
+    const state = getState();
 
+    console.log(state.posts);
     Axios
       .get('http://localhost:8000/api/posts')
       .then(res => {
