@@ -44,7 +44,7 @@ class Component extends React.Component {
 
         {loadingStatus !== undefined
           ?
-          !loadingStatus.active && post.user !== undefined
+          !loadingStatus.active && post.user !== undefined && post.status !== undefined
             ?
             <div className={clsx(className, styles.root)}>
               <div className={styles.container}>
@@ -77,9 +77,10 @@ class Component extends React.Component {
 
 Component.propTypes = {
   className: PropTypes.string,
-  post: PropTypes.object,
-  user: PropTypes.object,
-  status: PropTypes.object,
+  post: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]),
   currentUserInfo: PropTypes.object,
   selectedPost: PropTypes.func,
   match: PropTypes.shape({
