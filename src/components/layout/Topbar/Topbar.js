@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 
 import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,11 +38,11 @@ class Component extends React.Component {
     const {className, users, permmision, updateCurrentUser, currentUser} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
-        <NavLink to='/' className={styles.homeButton}>
-          <Button Type='div'>
+        <div className={styles.homeButton}>
+          <Button href='/'>
             <FontAwesomeIcon icon={faHome} />
           </Button>
-        </NavLink>
+        </div>
         {this.userButtons(permmision, currentUser)}
         <select defaultValue='4' name='users' id='users' onChange={event => updateCurrentUser(event.currentTarget.value)}>
           {users.map(user => (

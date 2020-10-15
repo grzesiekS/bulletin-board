@@ -5,21 +5,27 @@ import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getSelectedPost } from '../../../redux/postsRedux';
+import { getAllPosts, fetchSelectedPost, getLoadingStatus } from '../../../redux/postsRedux';
 import { getUserById, getCurrentUser } from '../../../redux/usersRedux';
 import { getStatusById } from '../../../redux/statusRedux';
 
 import styles from './Post.module.scss';
 import { Button } from '../../common/Button/Button';
 
-const Component = ({className, post, user, status, currentUserInfo}) => {
+class Component extends React.Component {
 
-  const statusRender = status => (
+  componentDidMount = () => {
+    const {selectedPost} = this.props;
+
+    selectedPost(this.props.match.params.id);
+  }
+
+  statusRender = status => (
     <p>Status: <span className={clsx(styles[status], styles.thicken)}>{status}</span></p>
   );
 
-  const buttonRender = () => {
-    if(currentUserInfo.id === user.id || currentUserInfo.permission === 'admin') {
+  buttonRender = (userInfo, user, post) => {
+    if(userInfo.id === user.id || userInfo.permission === 'admin') {
       return (
         <div className={styles.buttonSection}>
           <NavLink to={`/post/${post.id}/edit`}>
@@ -30,28 +36,45 @@ const Component = ({className, post, user, status, currentUserInfo}) => {
     }
   };
 
-  return(
-    <div className={clsx(className, styles.root)}>
-      <div className={styles.container}>
-        <div className={styles.postInfo}>
-          <h2>Post Title: {post.title}</h2>
-          <p>{post.description}</p>
-          <p>Price: <span className={styles.thicken}>{post.price}€</span></p>
-          <p>Upload: <span className={styles.thicken}>{post.uploadDate}</span></p>
-          <p>Update: <span className={styles.thicken}>{post.updateDate}</span></p>
-          {statusRender(status.statusName)}
-        </div>
-        <div className={styles.userInfo}>
-          <h2>Contact Me</h2>
-          <p>Author: <span className={styles.thicken}>{user.userName}</span></p>
-          <p>Email: <span className={styles.thicken}>{user.email}</span></p>
-          <p>Phone: <span className={styles.thicken}>{user.phoneNo}</span></p>
-        </div>
+  render() {
+
+    const {className, post, loadingStatus} = this.props;
+
+    return (
+      <div>
+
+        {loadingStatus !== undefined
+          ?
+          !loadingStatus.active && post.user !== undefined
+            ?
+            <div className={clsx(className, styles.root)}>
+              <div className={styles.container}>
+                <div className={styles.postInfo}>
+                  <h2>Post Title: {post.title}</h2>
+                  <p>{post.description}</p>
+                  <p>Price: <span className={styles.thicken}>{post.price}€</span></p>
+                  <p>Upload: <span className={styles.thicken}>{post.uploadDate}</span></p>
+                  <p>Update: <span className={styles.thicken}>{post.updateDate}</span></p>
+                  {this.statusRender(post.status.statusName)}
+                </div>
+                <div className={styles.userInfo}>
+                  <h2>Contact Me</h2>
+                  <p>Author: <span className={styles.thicken}>{post.user.userName}</span></p>
+                  <p>Email: <span className={styles.thicken}>{post.user.email}</span></p>
+                  <p>Phone: <span className={styles.thicken}>{post.user.phoneNo}</span></p>
+                </div>
+              </div>
+              {/* {this.buttonRender(currentUserInfo, user, post)} */}
+            </div>
+            :
+            null
+          :
+          null
+        }
       </div>
-      {buttonRender()}
-    </div>
-  );
-};
+    );
+  }
+}
 
 Component.propTypes = {
   className: PropTypes.string,
@@ -59,6 +82,15 @@ Component.propTypes = {
   user: PropTypes.object,
   status: PropTypes.object,
   currentUserInfo: PropTypes.object,
+  selectedPost: PropTypes.func,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+  loadingStatus: PropTypes.shape({
+    active: PropTypes.bool,
+  }),
 };
 
 Component.defaultProps = {
@@ -66,28 +98,30 @@ Component.defaultProps = {
   post: {},
   status: {},
   currentUserInfo: {},
+  selectedPost: () => {},
 };
 
-const mapStateToProps = (state, props) => {
-  const post = getSelectedPost(state, props.match.params.id);
-  const user = getUserById(state, post.user);
-  const status = getStatusById(state, post.status);
+const mapStateToProps = state => {
+  const post = getAllPosts(state);
+  //const user = getUserById(state, post.user);
+  // const status = getStatusById(state, post.status);
   const currentUser = getCurrentUser(state);
   const currentUserInfo = getUserById(state, currentUser);
 
   return {
     post,
-    user,
-    status,
+    loadingStatus: getLoadingStatus(state),
+    // user,
+    // status,
     currentUserInfo,
   };
 };
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  selectedPost: id => dispatch(fetchSelectedPost(id)),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Post,

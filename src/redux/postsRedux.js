@@ -3,7 +3,8 @@ import shortid from 'shortid';
 
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
-export const getSelectedPost = ({posts}, postId) => posts.data.filter(post => post.id === postId)[0];
+export const getSelectedPost = ({posts}, postId) => {};
+export const getLoadingStatus = ({posts}) => posts.loading;
 
 /* action name creator */
 const reducerName = 'posts';
@@ -38,6 +39,20 @@ export const fetchAllPosts = () => {
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
+  };
+};
+
+export const fetchSelectedPost = (id) => {
+  return async dispatch => {
+    dispatch(fetchStarted());
+
+    try {
+      let res = await Axios.get(`http://localhost:8000/api/posts/${id}`);
+      await new Promise((resolve, reject) => resolve());
+      dispatch(fetchSuccess(res.data));
+    } catch(err) {
+      dispatch(fetchError(err.message || true));
+    }
   };
 };
 
