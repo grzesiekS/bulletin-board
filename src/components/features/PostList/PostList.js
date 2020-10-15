@@ -7,35 +7,49 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
-import { getAllPosts } from '../../../redux/postsRedux';
+import { getAllPosts, fetchAllPosts } from '../../../redux/postsRedux';
 import { getCurrentUser, getUserById } from '../../../redux/usersRedux';
 
 import styles from './PostList.module.scss';
 import {Button} from '../../common/Button/Button';
 import {PostTemplate} from '../PostTemplate/PostTemplate';
 
-const Component = ({className, currentUser, posts, permmision}) => (
-  <div className={clsx(className, styles.root)}>
-    {permmision === 'notAuthorized'
-      ?
-      null
-      :
-      <NavLink to='/post/add'>
-        <Button Type={'div'}>
-          <FontAwesomeIcon icon={faPlus} />
-         Add New Post
-        </Button>
-      </NavLink>
-    }
-    <nav>
-      {posts.map(post => (
-        <NavLink key={post.id} to={`/post/${post.id}`}>
-          <PostTemplate {...post} />
-        </NavLink>
-      ))}
-    </nav>
-  </div>
-);
+class Component extends React.Component {
+
+  componentDidMount() {
+    const {loadPosts} = this.props;
+
+    loadPosts();
+  }
+
+  render() {
+
+    const {className, posts, permmision} = this.props;
+
+    return (
+      <div className={clsx(className, styles.root)}>
+        {permmision === 'notAuthorized'
+          ?
+          null
+          :
+          <NavLink to='/post/add'>
+            <Button Type={'div'}>
+              <FontAwesomeIcon icon={faPlus} />
+            Add New Post
+            </Button>
+          </NavLink>
+        }
+        <nav>
+          {posts.map(post => (
+            <NavLink key={post._id} to={`/post/${post._id}`}>
+              <PostTemplate {...post} />
+            </NavLink>
+          ))}
+        </nav>
+      </div>
+    );
+  }
+}
 
 Component.propTypes = {
   children: PropTypes.node,
@@ -43,6 +57,7 @@ Component.propTypes = {
   posts: PropTypes.array,
   currentUser: PropTypes.string,
   permmision: PropTypes.string,
+  loadPosts: PropTypes.func,
 };
 
 Component.defaultProps = {
@@ -59,11 +74,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  loadPosts: () => dispatch(fetchAllPosts()),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as PostList,

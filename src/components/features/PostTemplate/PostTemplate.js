@@ -23,7 +23,7 @@ Component.propTypes = {
 };
 
 Component.defaultProps = {
-  user: [],
+  user: {},
 };
 
 const mapStateToProps = (state, props) => ({

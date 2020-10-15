@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import shortid from 'shortid';
 
 /* selectors */
@@ -25,6 +26,20 @@ export const addNewPost = payload => ({payload, currentDate: new Date(), id: sho
 export const filterUserPosts = payload => ({payload, type: FILTER_USER_POST});
 
 /* thunk creators */
+export const fetchAllPosts = () => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .get('http://localhost:8000/api/posts')
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
