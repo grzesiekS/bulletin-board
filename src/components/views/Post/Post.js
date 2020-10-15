@@ -7,7 +7,6 @@ import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { getAllPosts, fetchSelectedPost, getLoadingStatus } from '../../../redux/postsRedux';
 import { getUserById, getCurrentUser } from '../../../redux/usersRedux';
-import { getStatusById } from '../../../redux/statusRedux';
 
 import styles from './Post.module.scss';
 import { Button } from '../../common/Button/Button';
@@ -104,7 +103,6 @@ Component.defaultProps = {
 const mapStateToProps = state => {
   const post = getAllPosts(state);
   //const user = getUserById(state, post.user);
-  // const status = getStatusById(state, post.status);
   const currentUser = getCurrentUser(state);
   const currentUserInfo = getUserById(state, currentUser);
 
@@ -112,7 +110,6 @@ const mapStateToProps = state => {
     post,
     loadingStatus: getLoadingStatus(state),
     // user,
-    // status,
     currentUserInfo,
   };
 };

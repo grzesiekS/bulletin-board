@@ -30,15 +30,17 @@ export const filterUserPosts = payload => ({payload, type: FILTER_USER_POST});
 export const fetchAllPosts = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-
-    Axios
-      .get('http://localhost:8000/api/posts')
-      .then(res => {
-        dispatch(fetchSuccess(res.data));
-      })
-      .catch(err => {
-        dispatch(fetchError(err.message || true));
-      });
+    const state = getState();
+    if(!state.posts.data) {
+      Axios
+        .get('http://localhost:8000/api/posts')
+        .then(res => {
+          dispatch(fetchSuccess(res.data));
+        })
+        .catch(err => {
+          dispatch(fetchError(err.message || true));
+        });
+    }
   };
 };
 

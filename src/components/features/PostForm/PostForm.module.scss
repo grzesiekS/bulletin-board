@@ -8,6 +8,7 @@
 
 .postStatus {
   position: absolute;
+  z-index: -1;
   text-align: center;
   opacity: 0;
   transition: $transition;
@@ -25,8 +26,9 @@
   }
 
   &.active {
-    opacity: 1;
+    animation: fadeIn 3s;
     position: relative;
+    animation: fadeOut 3s;
 
     p {
       background-color: $postCorrect-active-bg-color;
@@ -34,8 +36,9 @@
   }
 
   &.disactive {
-    opacity: 1;
+    animation: fadeIn 3s;
     position: relative;
+    animation: fadeOut 3s;
 
     p {
       background-color: $postCorrect-disactive-bg-color;

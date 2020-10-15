@@ -53,7 +53,7 @@ class Component extends React.Component {
         ...this.state,
         postStatus: null,
       });
-    }, 3000);
+    }, 2000);
   }
 
   newPost(user) {
