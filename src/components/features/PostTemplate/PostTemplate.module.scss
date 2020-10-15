@@ -1,12 +1,12 @@
 @import '../../../styles/settings.scss';
 
 .root {
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   border: 2px solid $postTemplate-border-color;
   border-radius: 5px;
   margin: 25px auto;
-  max-width: 600px;
   transition: $transition;
 
   &:hover {
