@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getSelectedPost, updatePost, addNewPost } from '../../../redux/postsRedux';
-import { getAllStatus } from '../../../redux/statusRedux';
+import { getAllStatus, fetchAllStatus } from '../../../redux/statusRedux';
 import { getCurrentUser } from '../../../redux/usersRedux';
 
 import styles from './PostForm.module.scss';
@@ -19,6 +19,11 @@ class Component extends React.Component {
     price: this.props.selectedPost.price || '',
     postStatus: null,
     postStatusDesc: '',
+  }
+
+  componentDidMount() {
+    const {loadStatus} = this.props;
+    loadStatus();
   }
 
   stateChange(value, key, postId, func) {
@@ -104,7 +109,7 @@ class Component extends React.Component {
               required
             >
               {allStatus.map(status => (
-                <option key={status.id} value={status.id}>{status.statusName}</option>
+                <option key={status._id} value={status._id}>{status.statusName}</option>
               ))}
             </select>
             <label htmlFor='price'>Price:</label>
@@ -141,11 +146,13 @@ Component.propTypes = {
   type: PropTypes.string,
   getCurrentUser: PropTypes.string,
   addNewPost: PropTypes.func,
+  loadStatus: PropTypes.func,
 };
 
 Component.defaultProps = {
   selectedPost: {},
   allStatus: [],
+  loadStatus: () => {},
 };
 
 const mapStateToProps = (state, props) => ({
@@ -157,6 +164,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => ({
   updatePost: (value,id, postId) => dispatch(updatePost({value,id,postId})),
   addNewPost: (componentState, currentUser) => dispatch(addNewPost({componentState, currentUser})),
+  loadStatus: () => dispatch(fetchAllStatus()),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -1,8 +1,8 @@
-// import Axios from 'axios';
+import Axios from 'axios';
 
 /* selectors */
-export const getAllStatus = ({status}) => status;
-export const getStatusById = ({status}, statusId) => status.filter(status => status.id === statusId)[0];
+export const getAllStatus = ({status}) => status.data;
+export const getStatusById = ({status}, statusId) => status.data.filter(status => status.id === statusId)[0];
 
 /* action name creator */
 const reducerName = 'status';
@@ -19,20 +19,20 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
-// export const fetchAllPosts = () => {
-//   return (dispatch, getState) => {
-//     dispatch(fetchStarted());
+export const fetchAllStatus = () => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
 
-//     Axios
-//       .get('http://localhost:8000/api/posts')
-//       .then(res => {
-//         dispatch(fetchSuccess(res.data));
-//       })
-//       .catch(err => {
-//         dispatch(fetchError(err.message || true));
-//       });
-//   };
-// };
+    Axios
+      .get('http://localhost:8000/api/status')
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
