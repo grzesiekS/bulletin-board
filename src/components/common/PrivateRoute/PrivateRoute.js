@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getCurrentUser, getUserById} from '../../../redux/usersRedux';
+import {getPermission} from '../../../redux/usersRedux';
 
 const Component = ({ component: Component, permmision, ...rest}) => (
   <Route
@@ -24,8 +24,7 @@ Component.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const currentUser = getCurrentUser(state);
-  const permmision = !getUserById(state, currentUser) ? 'notAuthorized' : getUserById(state, currentUser).permission;
+  const permmision = !getPermission(state) ? 'notAuthorized' : getPermission(state);
   return {
     permmision,
   };

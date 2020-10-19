@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
-import { getAll, getCurrentUser, updateCurrentUser, getUserById } from '../../../redux/usersRedux';
+import { getCurrentUser, getPermission, fetchAdmin } from '../../../redux/usersRedux';
 import { filterUserPosts } from '../../../redux/postsRedux';
 
 import styles from './Topbar.module.scss';
@@ -14,9 +14,15 @@ import { Button } from '../../common/Button/Button';
 
 class Component extends React.Component {
 
+  logIn = async () => {
+    const {logInAdmin} = this.props;
+
+    await logInAdmin();
+  }
+
   userButtons = (permmision, currentUser) => {
     if(permmision === 'notAuthorized') {
-      return <Button className={'button-green'}>Log In</Button>;
+      return <Button className={'button-green'} onClick={() => this.logIn()}>Log In</Button>;
     } else if (permmision === 'user' || permmision === 'admin') {
       return (
         <div>
@@ -35,7 +41,7 @@ class Component extends React.Component {
   }
 
   render() {
-    const {className, users, permmision, updateCurrentUser, currentUser} = this.props;
+    const {className, permmision, currentUser} = this.props;
     return (
       <div className={clsx(className, styles.root)}>
         <div className={styles.homeButton}>
@@ -44,11 +50,6 @@ class Component extends React.Component {
           </Button>
         </div>
         {this.userButtons(permmision, currentUser)}
-        <select defaultValue='4' name='users' id='users' onChange={event => updateCurrentUser(event.currentTarget.value)}>
-          {users.map(user => (
-            <option key={user.id} value={user.id}>{user.userName}</option>
-          ))}
-        </select>
       </div>
     );
   }
@@ -61,21 +62,21 @@ Component.propTypes = {
   updateCurrentUser: PropTypes.func,
   currentUser: PropTypes.string,
   filterUserPosts: PropTypes.func,
+  logInAdmin: PropTypes.func,
 };
 
 const mapStateToProps = state => {
   const currentUser = getCurrentUser(state);
-  const permmision = !getUserById(state, currentUser) ? 'notAuthorized' : getUserById(state, currentUser).permission;
+  const permmision = !getPermission(state) ? 'notAuthorized' : getPermission(state);
   return {
-    users: getAll(state),
     permmision,
     currentUser,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateCurrentUser: user => dispatch(updateCurrentUser(user)),
   filterUserPosts: user => dispatch(filterUserPosts(user)),
+  logInAdmin: () => dispatch(fetchAdmin()),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getCurrentUser, getUserById } from '../../../redux/usersRedux';
+import { getCurrentUser, getPermission } from '../../../redux/usersRedux';
 import { getSelectedPost } from '../../../redux/postsRedux';
 
 import styles from './PostEdit.module.scss';
@@ -52,7 +52,7 @@ Component.propTypes = {
 
 const mapStateToProps = (state, props) => {
   const currentUser = getCurrentUser(state);
-  const permission = !getUserById(state, currentUser) ? 'notAuthorized' : getUserById(state, currentUser).permission;
+  const permission =  !getPermission(state) ? 'notAuthorized' : getPermission(state);
 
   return {
     currentUser,

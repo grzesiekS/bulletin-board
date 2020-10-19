@@ -3,9 +3,9 @@ const router = express.Router();
 
 const User = require('../models/user.model');
 
-router.get('/users', async (req, res) => {
+router.get('/userAdmin', async (req, res) => {
   try {
-    const result = await User.find();
+    const result = await User.findOne({ permission: {$eq: 'admin'} });
     if(!result) res.status(404).json({ post: 'Not found'});
     else res.json(result);
   } catch(err) {
