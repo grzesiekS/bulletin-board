@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import shortid from 'shortid';
 
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
@@ -23,7 +22,7 @@ export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const updatePost = payload => ({ payload, currentDate: new Date(), type: UPDATE_POST });
-export const addNewPost = payload => ({payload, currentDate: new Date(), id: shortid.generate(), type: ADD_NEW_POST});
+export const addNewPost = payload => ({payload, type: ADD_NEW_POST});
 export const filterUserPosts = payload => ({payload, type: FILTER_USER_POST});
 
 /* thunk creators */
@@ -54,6 +53,20 @@ export const fetchSelectedPost = (id) => {
       dispatch(fetchSuccess(res.data));
     } catch(err) {
       dispatch(fetchError(err.message || true));
+    }
+  };
+};
+
+export const addNewPostRequest = (post) => {
+  return async dispatch => {
+    dispatch(fetchStarted());
+
+    try {
+      let res = await Axios.post('http://localhost:8000/api/posts', post);
+      await new Promise((resolve) => resolve());
+      dispatch(addNewPost(res));
+    } catch(e) {
+      dispatch(fetchError(e.message || true));
     }
   };
 };
@@ -111,18 +124,13 @@ export const reducer = (statePart = [], action = {}) => {
     case ADD_NEW_POST: {
       return {
         ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
         data: [
           ...statePart.data,
-          {
-            id: action.id,
-            title: action.payload.componentState.title,
-            description: action.payload.componentState.description,
-            uploadDate: action.currentDate.toString(),
-            updateDate: action.currentDate.toString(),
-            user: action.payload.currentUser,
-            status: action.payload.componentState.statusId,
-            price: action.payload.componentState.price,
-          },
+          ...action.payload,
         ],
       };
     }

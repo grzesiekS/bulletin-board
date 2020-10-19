@@ -33,4 +33,12 @@ router.get('/posts/:id', async (req, res) => {
   }
 });
 
+router.post('/posts', async (req, res) => {
+  try {
+    console.log(req.body);
+  } catch(err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

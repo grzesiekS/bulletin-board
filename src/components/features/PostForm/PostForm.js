@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
+import {currentDateFunc} from '../../../utils/currentDateFunc';
+
 import { connect } from 'react-redux';
-import { getSelectedPost, updatePost, addNewPost } from '../../../redux/postsRedux';
+import { getSelectedPost, updatePost, addNewPostRequest } from '../../../redux/postsRedux';
 import { getAllStatus, fetchAllStatus } from '../../../redux/statusRedux';
 import { getCurrentUser } from '../../../redux/usersRedux';
 
@@ -15,7 +17,7 @@ class Component extends React.Component {
   state = {
     title: this.props.selectedPost.title || '',
     description: this.props.selectedPost.description || '',
-    status: this.props.selectedPost.status || '1',
+    status: this.props.selectedPost.status || '',
     price: this.props.selectedPost.price || '',
     postStatus: null,
     postStatusDesc: '',
@@ -23,6 +25,13 @@ class Component extends React.Component {
 
   componentDidMount() {
     const {loadStatus} = this.props;
+
+    this.setState({
+      ...this.state,
+      uploadDate: currentDateFunc(),
+      updateDate: currentDateFunc(),
+    });
+
     loadStatus();
   }
 
@@ -39,8 +48,9 @@ class Component extends React.Component {
       ...this.state,
       title: '',
       description: '',
-      status: '1',
       price: '',
+      uploadDate: currentDateFunc(),
+      updateDate: currentDateFunc(),
     });
   }
 
@@ -108,6 +118,7 @@ class Component extends React.Component {
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             >
+              <option disabled selected value> -- select status -- </option>
               {allStatus.map(status => (
                 <option key={status._id} value={status._id}>{status.statusName}</option>
               ))}
@@ -163,7 +174,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
   updatePost: (value,id, postId) => dispatch(updatePost({value,id,postId})),
-  addNewPost: (componentState, currentUser) => dispatch(addNewPost({componentState, currentUser})),
+  addNewPost: (componentState, currentUser) => dispatch(addNewPostRequest({componentState, currentUser})),
   loadStatus: () => dispatch(fetchAllStatus()),
 });
 
