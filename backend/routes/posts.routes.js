@@ -36,8 +36,10 @@ router.get('/posts/:id', async (req, res) => {
 
 router.post('/posts', async (req, res) => {
   try {
+    const bodySanitize = sanitize(req.body);
     const componentStateSanitize = sanitize(req.body.componentState);
     const {title, description, status, price, uploadDate, updateDate} = componentStateSanitize;
+    const {currentUser} = bodySanitize;
 
     const newPost = new Post(
       {
@@ -47,6 +49,7 @@ router.post('/posts', async (req, res) => {
         price: price,
         uploadDate: uploadDate,
         updateDate: updateDate,
+        user: currentUser,
       }
     );
 
