@@ -1,6 +1,7 @@
 export const initialState = {
   users: {
     currentUser: '',
+    permission: '',
     userList: [
       {
         id: '1',
