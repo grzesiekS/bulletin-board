@@ -71,7 +71,7 @@ class Component extends React.Component {
     }, 2000);
   }
 
-  newPost(user) {
+  newPost = user => {
     if(this.state.title && this.state.description && this.state.status && this.state.price) {
       if(this.state.title.length >= 10 && this.state.description.length >= 20 && this.state.price >= 0) {
         this.props.addNewPost(this.state, user);
@@ -114,11 +114,11 @@ class Component extends React.Component {
             <select
               name='status'
               id='status'
-              defaultValue={this.state.status}
+              defaultValue='default'
               onChange={event => this.stateChange(event.currentTarget.value ,event.currentTarget.id, selectedPost.id, updatePost)}
               required
             >
-              <option disabled selected value> -- select status -- </option>
+              <option disabled value='default'> -- select status -- </option>
               {allStatus.map(status => (
                 <option key={status._id} value={status._id}>{status.statusName}</option>
               ))}
