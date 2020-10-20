@@ -15,6 +15,7 @@ $white: #ffffff;
 $lawnGreen: #7CFC00;
 $fireBrick: #B22222;
 $dodgerBlue: #1E90FF;
+$lightGrey: #f3f3f3;
 
 // HEADER SECTION
 $header-bg-color-after-image: $black;
@@ -52,6 +53,9 @@ $post-status-closed-color: $fireBrick;
 $postCorrect-active-bg-color: $lawnGreen;
 $postCorrect-disactive-bg-color: $fireBrick;
 
+// LOADING
+$loading-border-color: $lightGrey;
+$loading-borderTop-color: $dodgerBlue;
 
 @keyframes fadeIn {
   from {opacity: 0;}
@@ -60,4 +64,9 @@ $postCorrect-disactive-bg-color: $fireBrick;
 @keyframes fadeOut {
   from {opacity: 1;}
   to {opacity: 0;}
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

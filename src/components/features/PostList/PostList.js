@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
-import { getAllPosts, fetchAllPosts } from '../../../redux/postsRedux';
+import { getAllPosts, fetchAllPosts, getLoadingStatus } from '../../../redux/postsRedux';
 import { getCurrentUser, getPermission } from '../../../redux/usersRedux';
 
 import styles from './PostList.module.scss';
 import {Button} from '../../common/Button/Button';
 import {PostTemplate} from '../PostTemplate/PostTemplate';
+import {Loading} from '../../common/Loading/Loading';
 
 class Component extends React.Component {
 
@@ -24,7 +25,7 @@ class Component extends React.Component {
 
   render() {
 
-    const {className, posts, permmision} = this.props;
+    const {className, posts, permmision, loadingStatus} = this.props;
 
     return (
       <div className={clsx(className, styles.root)}>
@@ -39,13 +40,18 @@ class Component extends React.Component {
             </Button>
           </NavLink>
         }
-        <nav>
-          {posts.map(post => (
-            <NavLink key={post._id} to={`/post/${post._id}`}>
-              <PostTemplate {...post} />
-            </NavLink>
-          ))}
-        </nav>
+        {loadingStatus === undefined || loadingStatus.active
+          ?
+          <Loading />
+          :
+          <nav>
+            {posts.map(post => (
+              <NavLink key={post._id} to={`/post/${post._id}`}>
+                <PostTemplate {...post} />
+              </NavLink>
+            ))}
+          </nav>
+        }
       </div>
     );
   }
@@ -58,6 +64,7 @@ Component.propTypes = {
   currentUser: PropTypes.string,
   permmision: PropTypes.string,
   loadPosts: PropTypes.func,
+  loadingStatus: PropTypes.object,
 };
 
 Component.defaultProps = {
@@ -71,6 +78,7 @@ const mapStateToProps = (state) => {
     posts: getAllPosts(state),
     currentUser,
     permmision,
+    loadingStatus: getLoadingStatus(state),
   };
 };
 
