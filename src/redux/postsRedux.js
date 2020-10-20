@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 /* selectors */
 export const getAllPosts = ({posts}) => posts.data;
-export const getSelectedPost = ({posts}, postId) => {};
+export const getSelectedPost = ({posts}, postId) => posts.data.filter(post => post._id === postId)[0];
 export const getLoadingStatus = ({posts}) => posts.loading;
 
 /* action name creator */
@@ -29,17 +29,15 @@ export const filterUserPosts = payload => ({payload, type: FILTER_USER_POST});
 export const fetchAllPosts = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-    const state = getState();
-    if(!state.posts.data) {
-      Axios
-        .get('http://localhost:8000/api/posts')
-        .then(res => {
-          dispatch(fetchSuccess(res.data));
-        })
-        .catch(err => {
-          dispatch(fetchError(err.message || true));
-        });
-    }
+
+    Axios
+      .get('http://localhost:8000/api/posts')
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
   };
 };
 

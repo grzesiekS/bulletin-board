@@ -5,19 +5,13 @@ import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getAllPosts, fetchSelectedPost, getLoadingStatus } from '../../../redux/postsRedux';
+import {getLoadingStatus, getSelectedPost } from '../../../redux/postsRedux';
 import { getUserById, getCurrentUser } from '../../../redux/usersRedux';
 
 import styles from './Post.module.scss';
 import { Button } from '../../common/Button/Button';
 
 class Component extends React.Component {
-
-  componentDidMount = () => {
-    const {selectedPost} = this.props;
-
-    selectedPost(this.props.match.params.id);
-  }
 
   statusRender = status => (
     <p>Status: <span className={clsx(styles[status], styles.thicken)}>{status}</span></p>
@@ -37,39 +31,29 @@ class Component extends React.Component {
 
   render() {
 
-    const {className, post, loadingStatus} = this.props;
+    const {className, post} = this.props;
 
     return (
       <div>
-
-        {loadingStatus !== undefined
-          ?
-          !loadingStatus.active && post.user !== undefined && post.status !== undefined
-            ?
-            <div className={clsx(className, styles.root)}>
-              <div className={styles.container}>
-                <div className={styles.postInfo}>
-                  <h2>Post Title: {post.title}</h2>
-                  <p>{post.description}</p>
-                  <p>Price: <span className={styles.thicken}>{post.price}€</span></p>
-                  <p>Upload: <span className={styles.thicken}>{post.uploadDate}</span></p>
-                  <p>Update: <span className={styles.thicken}>{post.updateDate}</span></p>
-                  {this.statusRender(post.status.statusName)}
-                </div>
-                <div className={styles.userInfo}>
-                  <h2>Contact Me</h2>
-                  <p>Author: <span className={styles.thicken}>{post.user.userName}</span></p>
-                  <p>Email: <span className={styles.thicken}>{post.user.email}</span></p>
-                  <p>Phone: <span className={styles.thicken}>{post.user.phoneNo}</span></p>
-                </div>
-              </div>
-              {/* {this.buttonRender(currentUserInfo, user, post)} */}
+        <div className={clsx(className, styles.root)}>
+          <div className={styles.container}>
+            <div className={styles.postInfo}>
+              <h2>Post Title: {post.title}</h2>
+              <p>{post.description}</p>
+              <p>Price: <span className={styles.thicken}>{post.price}€</span></p>
+              <p>Upload: <span className={styles.thicken}>{post.uploadDate}</span></p>
+              <p>Update: <span className={styles.thicken}>{post.updateDate}</span></p>
+              {this.statusRender(post.status.statusName)}
             </div>
-            :
-            null
-          :
-          null
-        }
+            <div className={styles.userInfo}>
+              <h2>Contact Me</h2>
+              <p>Author: <span className={styles.thicken}>{post.user.userName}</span></p>
+              <p>Email: <span className={styles.thicken}>{post.user.email}</span></p>
+              <p>Phone: <span className={styles.thicken}>{post.user.phoneNo}</span></p>
+            </div>
+          </div>
+          {/* {this.buttonRender(currentUserInfo, user, post)} */}
+        </div>
       </div>
     );
   }
@@ -101,8 +85,8 @@ Component.defaultProps = {
   selectedPost: () => {},
 };
 
-const mapStateToProps = state => {
-  const post = getAllPosts(state);
+const mapStateToProps = (state, props) => {
+  const post = getSelectedPost(state, props.match.params.id);
   //const user = getUserById(state, post.user);
   const currentUser = getCurrentUser(state);
   const currentUserInfo = getUserById(state, currentUser);
@@ -115,11 +99,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  selectedPost: id => dispatch(fetchSelectedPost(id)),
-});
-
-const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
   // Component as Post,
