@@ -15,7 +15,7 @@ router.get('/posts', async (req, res) => {
       .select('title description user status')
       .sort({updateDate: -1});
     if(!result) res.status(404).json({ post: 'Not found' });
-    else res.json(result);
+    else res.json(result.filter(result => result.status.statusName === 'published'));
   }
   catch(err) {
     res.status(500).json(err);
