@@ -16,10 +16,12 @@ const FETCH_ERROR = createActionName('FETCH_ERROR');
 const UPDATE_POST = createActionName('UPDATE_POST');
 const ADD_NEW_POST = createActionName('ADD_NEW_POST');
 const FILTER_USER_POST = createActionName('FILTER_USER_POST');
+const UPDATE_FETCH_SUCCESS = createActionName('UPDATE_FETCH_SUCCESS');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
+export const updateFetchSuccess = payload => ({payload, type: UPDATE_FETCH_SUCCESS});
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const updatePost = payload => ({ payload, currentDate: new Date(), type: UPDATE_POST });
 export const addNewPost = payload => ({payload, type: ADD_NEW_POST});
@@ -48,7 +50,7 @@ export const fetchSelectedPost = (id) => {
     try {
       let res = await Axios.get(`http://localhost:8000/api/posts/${id}`);
       await new Promise((resolve, reject) => resolve());
-      dispatch(fetchSuccess(res.data));
+      dispatch(updateFetchSuccess(res.data));
     } catch(err) {
       dispatch(fetchError(err.message || true));
     }
@@ -89,6 +91,21 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         data: action.payload,
+      };
+    }
+    case UPDATE_FETCH_SUCCESS: {
+      console.log(action.payload);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        data:
+          [
+            ...statePart.data.filter(post => post._id !== action.payload._id),
+            action.payload,
+          ],
       };
     }
     case FETCH_ERROR: {
